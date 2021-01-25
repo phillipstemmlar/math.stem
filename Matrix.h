@@ -28,14 +28,17 @@ public:
 	bool isNonNegative(); // a(i,j)>=0 for all i,j
 	bool isPositive();		// a(i,j)>0 for all i,j
 
-	//Equality
+	//Comparison
 		//Compare 2 matrices' sizes
 		//Compare 2 matrices' values
 
-	//Arithmetic
+	//Operations
 		//Addition (Different forms, all cases)
 		//multiplication  (Different forms, all cases)
 		//scaling
+		//transpose
+		//inverse
+
 
 	//output
 	void print();
