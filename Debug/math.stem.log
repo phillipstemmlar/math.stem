@@ -1,13 +1,10 @@
-﻿  MatrixException.cpp
-  math.stem.cpp
+﻿  Matrix.cpp
 C:\StemEngine\math.stem\Matrix.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Matrix.cpp
-C:\StemEngine\math.stem\Matrix.h(4,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\StemEngine\math.stem\Matrix.cpp(18,33): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\StemEngine\math.stem\Matrix.cpp(36,18): warning C4018: '<': signed/unsigned mismatch
-C:\StemEngine\math.stem\Matrix.cpp(36,45): warning C4018: '<': signed/unsigned mismatch
-C:\StemEngine\math.stem\Matrix.cpp(48,18): warning C4018: '<': signed/unsigned mismatch
-C:\StemEngine\math.stem\Matrix.cpp(48,45): warning C4018: '<': signed/unsigned mismatch
+C:\StemEngine\math.stem\Matrix.cpp(17,67): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\StemEngine\math.stem\Matrix.cpp(30,18): warning C4018: '<': signed/unsigned mismatch
+C:\StemEngine\math.stem\Matrix.cpp(30,45): warning C4018: '<': signed/unsigned mismatch
+C:\StemEngine\math.stem\Matrix.cpp(37,18): warning C4018: '<': signed/unsigned mismatch
+C:\StemEngine\math.stem\Matrix.cpp(37,45): warning C4018: '<': signed/unsigned mismatch
+  MatrixException.cpp
   Generating Code...
-     Creating library C:\StemEngine\Debug\math.stem.lib and object C:\StemEngine\Debug\math.stem.exp
   math.stem.vcxproj -> C:\StemEngine\Debug\math.stem.dll
