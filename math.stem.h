@@ -6,14 +6,4 @@
 #define DLLEXPORT __declspec(dllimport)
 #endif
 
-#include "Vector2.h"
-
-
-
-
-//extern "C" DLLEXPORT void fibonacci_init(
-//	const unsigned long long a, const unsigned long long b);
-
-
-
-
+#include "Matrix.h"
