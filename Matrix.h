@@ -5,66 +5,73 @@
 #include <string>
 #include <vector>
 
-class DLLEXPORT Matrix {
+class Matrix {
 public:
 
 	//Structure
-	Matrix(int m, int n, bool identify = true);
-	~Matrix();
+	DLLEXPORT Matrix(int m, int n, bool identify = true);
+	DLLEXPORT Matrix(int m, int n, const std::vector<std::vector<float>>& vals);
+	DLLEXPORT Matrix(const Matrix& mat);
+	DLLEXPORT ~Matrix();
 
 	//writers
-	void set(int j, int i, float value);
+	DLLEXPORT void set(int j, int i, float value);
 
 	//readers
-	float get(int j, int i) const;
+	DLLEXPORT float get(int j, int i) const;
 
-	int M() const;
-	int N() const;
+	DLLEXPORT int M() const;
+	DLLEXPORT int N() const;
 
 	//Queries
-	bool isSquare();		//m=n
-	bool isDiagonal();	// a(i,j)=0 if i!=j
-	bool isIdentity();	// a(i,j)=0 if i!=j		&&	a(i,j)=1 if i=j
-	bool isZero();			// a(i,j)=0 for all i,j
-	bool isNonNegative(); // a(i,j)>=0 for all i,j
-	bool isPositive();		// a(i,j)>0 for all i,j
-	//bool isInvertible();
+	DLLEXPORT bool isSquare() const;		//m=n
+	DLLEXPORT bool isDiagonal() const;	// a(i,j)=0 if i!=j
+	DLLEXPORT bool isIdentity() const;	// a(i,j)=0 if i!=j		&&	a(i,j)=1 if i=j
+	DLLEXPORT bool isZero() const;			// a(i,j)=0 for all i,j
+	DLLEXPORT bool isNonNegative() const; // a(i,j)>=0 for all i,j
+	DLLEXPORT bool isPositive() const;		// a(i,j)>0 for all i,j
+	DLLEXPORT bool isInvertible();
 
 	//Comparison
-	static bool compareSize(Matrix const& mat1, Matrix const& mat2);
-	static bool compareValues(Matrix const& mat1, Matrix const& mat2);
-	bool compareSize(Matrix const& mat);
-	bool compareValues(Matrix const& mat);
+	DLLEXPORT static bool compareSize(const Matrix& mat1, const Matrix& mat2);
+	DLLEXPORT static bool compareValues(const Matrix& mat1, const Matrix& mat2);
+	DLLEXPORT bool compareSize(const Matrix& mat);
+	DLLEXPORT bool compareValues(const Matrix& mat);
 
+	DLLEXPORT static Matrix Add(const Matrix& mat1, const Matrix& mat2);
+	DLLEXPORT static Matrix Sub(const Matrix& mat1, const Matrix& mat2);
+	DLLEXPORT static Matrix Mult(const Matrix& mat1, const Matrix& mat2);
+	DLLEXPORT static Matrix Scale(const Matrix& mat1, float s);
 
-	//Operations
-		//Addition (Different forms, all cases)
-			//Matrix-Matrix Addition
-			//Matrix-Matrix Subtraction
-		//multiplication  (Different forms, all cases)
-			//Matrix-Scalar Multiplication
-			//Matrix-Matrix Multiplication
-			//vector?...
-		//inverse
-		//determinant
+	DLLEXPORT static Matrix transpose(const Matrix& mat);
+	DLLEXPORT static float determinant(const Matrix& mat);
+	DLLEXPORT static Matrix inverse(Matrix& mat);
 
-	static Matrix Add(const Matrix& mat1, const Matrix& mat2);
-	static Matrix Sub(const Matrix& mat1, const Matrix& mat2);
-	static Matrix Scale(const Matrix& mat1, float s);
-	static Matrix transpose(Matrix& mat);
+	DLLEXPORT Matrix Add(const Matrix& mat);
+	DLLEXPORT Matrix Sub(const Matrix& mat);
+	DLLEXPORT Matrix Mult(const Matrix& mat);
+	DLLEXPORT Matrix Scale(float s);
 
-	Matrix Add(const Matrix& mat);
-	Matrix Sub(const Matrix& mat);
-	Matrix Scale(float s);
-	Matrix transpose();
+	DLLEXPORT Matrix transpose();
+	DLLEXPORT float determinant();
+	DLLEXPORT Matrix inverse();
 
-	Matrix operator+ (const Matrix& mat);			//Matrix-Matrix Addition
-	Matrix operator- (const Matrix& mat);			//Matrix-Matrix Subtraction
-	Matrix operator* (float s);								//Matrix-Scalar Multiplication
+	DLLEXPORT Matrix operator+ (const Matrix& mat);			//Matrix-Matrix Addition
+	DLLEXPORT Matrix operator- (const Matrix& mat);			//Matrix-Matrix Subtraction
+	DLLEXPORT Matrix operator* (float s);								//Matrix-Scalar Multiplication
+	DLLEXPORT Matrix operator* (const Matrix& mat1);		//Matrix-Scalar Multiplication
+
+	DLLEXPORT Matrix& operator+= (const Matrix& mat);		//Matrix-Matrix Addition
+	DLLEXPORT Matrix& operator-= (const Matrix& mat);		//Matrix-Matrix Addition
+	DLLEXPORT Matrix& operator*= (float s);							//Matrix-Scalar Multiplication
+	DLLEXPORT Matrix& operator*= (const Matrix& mat1);		//Matrix-Scalar Multiplication
 
 	//output
-	void print();
-	void print(const char* label);
+	DLLEXPORT void print() const;
+	DLLEXPORT void print(const char* label) const;
+protected:
+	void setValues(int m, int n, const std::vector<std::vector<float>>& vals);
+	static Matrix subMatrix(const Matrix& mat, int m, int n);
 private:
 	int m;
 	int n;
