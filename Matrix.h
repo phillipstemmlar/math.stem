@@ -9,10 +9,10 @@ class Matrix {
 public:
 
 	//Structure
-	DLLEXPORT Matrix(int m, int n, bool identify = true);
+	DLLEXPORT Matrix(int m, int n, bool identity = true);
 	DLLEXPORT Matrix(int m, int n, const std::vector<std::vector<float>>& vals);
 	DLLEXPORT Matrix(const Matrix& mat);
-	DLLEXPORT ~Matrix();
+	DLLEXPORT virtual ~Matrix();
 
 	//writers
 	DLLEXPORT void set(int j, int i, float value);
@@ -83,3 +83,24 @@ private:
 };
 
 extern DLLEXPORT Matrix operator* (float s, const Matrix& mat); //Scalar-Matrix Multiplication
+
+class Matrix2 : public Matrix {
+public:
+	DLLEXPORT Matrix2(bool identity = true);
+	DLLEXPORT Matrix2(const std::vector<std::vector<float>>& vals);
+	DLLEXPORT Matrix2(const Matrix2& mat);
+};
+
+class Matrix3 : public Matrix {
+public:
+	DLLEXPORT Matrix3(bool identity = true);
+	DLLEXPORT Matrix3(const std::vector<std::vector<float>>& vals);
+	DLLEXPORT Matrix3(const Matrix3& mat);
+};
+
+class Matrix4 : public Matrix {
+public:
+	DLLEXPORT Matrix4(bool identity = true);
+	DLLEXPORT Matrix4(const std::vector<std::vector<float>>& vals);
+	DLLEXPORT Matrix4(const Matrix4& mat);
+};

@@ -4,7 +4,7 @@
 
 //====================STRUCTURE=====================
 
-Matrix::Matrix(int m, int n, bool identify) {
+Matrix::Matrix(int m, int n, bool identity) {
 	if (m < Matrix::MIN_DIMMENSION_SIZE) m = Matrix::MIN_DIMMENSION_SIZE;
 	if (n < Matrix::MIN_DIMMENSION_SIZE) n = Matrix::MIN_DIMMENSION_SIZE;
 	if (m > Matrix::MAX_DIMMENSION_SIZE) m = Matrix::MAX_DIMMENSION_SIZE;
@@ -15,7 +15,7 @@ Matrix::Matrix(int m, int n, bool identify) {
 
 	this->values = std::vector<std::vector<float>>(this->m, std::vector<float>(this->n, 0));
 
-	if (identify && this->isSquare()) {
+	if (identity && this->isSquare()) {
 		for (int i = 0; i < this->n; ++i)  this->values[i][i] = 1;
 	}
 }
@@ -312,6 +312,21 @@ void Matrix::setValues(int m, int n, const std::vector<std::vector<float>>& vals
 		for (int i = 0; i < this->n; ++i)
 			this->values[j][i] = vals[j][i];
 }
+
+
+//====================MATRIX PRESETS========================
+
+Matrix2::Matrix2(bool identity) : Matrix(2, 2, identity) {}
+Matrix2::Matrix2(const std::vector<std::vector<float>>& vals) : Matrix(2, 2, vals) {}
+Matrix2::Matrix2(const Matrix2& mat) : Matrix(mat) {}
+
+Matrix3::Matrix3(bool identity) : Matrix(3, 3, identity) {}
+Matrix3::Matrix3(const std::vector<std::vector<float>>& vals) : Matrix(3, 3, vals) {}
+Matrix3::Matrix3(const Matrix3& mat) : Matrix(mat) {}
+
+Matrix4::Matrix4(bool identity) : Matrix(4, 4, identity) {}
+Matrix4::Matrix4(const std::vector<std::vector<float>>& vals) : Matrix(4, 4, vals) {}
+Matrix4::Matrix4(const Matrix4& mat) : Matrix(mat) {}
 
 
 //----------------LU Decomposition---------------------
