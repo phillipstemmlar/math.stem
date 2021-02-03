@@ -156,6 +156,8 @@
     <ClInclude Include="MatrixException.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="Vector.h" />
+    <ClInclude Include="VectorException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -168,6 +170,8 @@
     </ClCompile>
     <ClCompile Include="math.stem.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="VectorException.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

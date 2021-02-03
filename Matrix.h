@@ -1,9 +1,9 @@
 #pragma once
 
-#include "math.stem.h"
-#include "MatrixException.h"
+#include "pch.h"
 #include <string>
 #include <vector>
+#include "MatrixException.h"
 
 class Matrix {
 public:
@@ -23,6 +23,13 @@ public:
 	DLLEXPORT int M() const;
 	DLLEXPORT int N() const;
 
+	//static preset matrices
+	DLLEXPORT static Matrix Zero(int m, int n);
+	DLLEXPORT static Matrix Identity(int m, int n);
+
+	//get column vector
+		//virtual for presets
+
 	//Queries
 	DLLEXPORT bool isSquare() const;		//m=n
 	DLLEXPORT bool isDiagonal() const;	// a(i,j)=0 if i!=j
@@ -38,6 +45,10 @@ public:
 	DLLEXPORT bool compareSize(const Matrix& mat);
 	DLLEXPORT bool compareValues(const Matrix& mat);
 
+	DLLEXPORT friend bool operator==(const Matrix& matLeft, const Matrix& matRight);
+	DLLEXPORT friend bool operator!=(const Matrix& matLeft, const Matrix& matRight);
+
+	//Operations
 	DLLEXPORT static Matrix Add(const Matrix& mat1, const Matrix& mat2);
 	DLLEXPORT static Matrix Sub(const Matrix& mat1, const Matrix& mat2);
 	DLLEXPORT static Matrix Mult(const Matrix& mat1, const Matrix& mat2);
@@ -60,6 +71,7 @@ public:
 	DLLEXPORT Matrix operator- (const Matrix& mat);			//Matrix-Matrix Subtraction
 	DLLEXPORT Matrix operator* (float s);								//Matrix-Scalar Multiplication
 	DLLEXPORT Matrix operator* (const Matrix& mat1);		//Matrix-Scalar Multiplication
+	DLLEXPORT friend Matrix operator* (float s, const Matrix& mat); //Scalar-Matrix Multiplication
 
 	DLLEXPORT Matrix& operator+= (const Matrix& mat);		//Matrix-Matrix Addition
 	DLLEXPORT Matrix& operator-= (const Matrix& mat);		//Matrix-Matrix Addition
@@ -67,28 +79,31 @@ public:
 	DLLEXPORT Matrix& operator*= (const Matrix& mat1);		//Matrix-Scalar Multiplication
 
 	//output
-	DLLEXPORT void print() const;
-	DLLEXPORT void print(const char* label) const;
+	DLLEXPORT virtual void print() const;
+	DLLEXPORT virtual void print(const char* label) const;
 protected:
 	void setValues(int m, int n, const std::vector<std::vector<float>>& vals);
 	static Matrix subMatrix(const Matrix& mat, int m, int n);
-private:
-	int m;
-	int n;
 
-	std::vector<std::vector<float>> values;
+	float& getValueRef(int j, int i);
 
 	static const int MIN_DIMMENSION_SIZE = 1;
 	static const int MAX_DIMMENSION_SIZE = 10000;
-};
 
-extern DLLEXPORT Matrix operator* (float s, const Matrix& mat); //Scalar-Matrix Multiplication
+	std::vector<std::vector<float>> values;
+private:
+	int m;	//row count
+	int n;	//col count
+};
 
 class Matrix2 : public Matrix {
 public:
 	DLLEXPORT Matrix2(bool identity = true);
 	DLLEXPORT Matrix2(const std::vector<std::vector<float>>& vals);
 	DLLEXPORT Matrix2(const Matrix2& mat);
+
+	DLLEXPORT static Matrix2 Zero();
+	DLLEXPORT static Matrix2 Identity();
 };
 
 class Matrix3 : public Matrix {
@@ -96,6 +111,9 @@ public:
 	DLLEXPORT Matrix3(bool identity = true);
 	DLLEXPORT Matrix3(const std::vector<std::vector<float>>& vals);
 	DLLEXPORT Matrix3(const Matrix3& mat);
+
+	DLLEXPORT static Matrix3 Zero();
+	DLLEXPORT static Matrix3 Identity();
 };
 
 class Matrix4 : public Matrix {
@@ -103,4 +121,7 @@ public:
 	DLLEXPORT Matrix4(bool identity = true);
 	DLLEXPORT Matrix4(const std::vector<std::vector<float>>& vals);
 	DLLEXPORT Matrix4(const Matrix4& mat);
+
+	DLLEXPORT static Matrix4 Zero();
+	DLLEXPORT static Matrix4 Identity();
 };

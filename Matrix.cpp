@@ -56,6 +56,11 @@ float Matrix::get(int j, int i) const {
 int Matrix::M() const { return this->m; }
 int Matrix::N() const { return this->n; }
 
+//====================STATIC PRESETS==============
+
+Matrix Matrix::Zero(int m, int n) { return Matrix(m, n, false); }
+Matrix Matrix::Identity(int m, int n) { return Matrix(m, n, true); }
+
 //====================QUERIES=====================
 
 //NOTE:  m=n
@@ -122,6 +127,9 @@ bool Matrix::compareValues(const Matrix& mat1, const Matrix& mat2) {
 bool Matrix::compareSize(const Matrix& mat) { return Matrix::compareSize(*this, mat); }
 bool Matrix::compareValues(const Matrix& mat) { return Matrix::compareValues(*this, mat); }
 
+bool operator==(const Matrix& matLeft, const Matrix& matRight) { return Matrix::compareValues(matLeft, matRight); }
+bool operator!=(const Matrix& matLeft, const Matrix& matRight) { return !(matLeft == matRight); }
+
 //===================OPERATORS=======================
 
 Matrix Matrix::Add(const Matrix& mat1, const Matrix& mat2) {
@@ -184,7 +192,7 @@ float Matrix::determinant(const Matrix& mat) {
 Matrix Matrix::subMatrix(const Matrix& mat, int excRow_m, int excCol_n) {
 	if (excRow_m >= mat.m) excRow_m = mat.m - 1;
 	if (excCol_n >= mat.n) excCol_n = mat.n - 1;
-	Matrix newMat(mat.m - 1, mat.n - 1, false);
+	Matrix newMat = Matrix::Zero(mat.m - 1, mat.n - 1);
 	int j = 0;
 	for (int p = 0; p < mat.m; ++p) {
 		if (p != excRow_m) {
@@ -205,7 +213,7 @@ Matrix Matrix::inverse(Matrix& mat) {		//NOTE: Matrix inverse with LU decomposit
 	if (!mat.isInvertible()) throw MatrixNotInvertibleException();
 	int M = mat.m, N = mat.n;
 	Matrix old(mat);
-	Matrix inv(M, N, true);
+	Matrix inv = Matrix::Identity(M, N);
 	for (int i = 0; i < N; ++i) {
 		if (old.values[i][i] == 0)	throw MatrixNotInvertibleException();
 		for (int j = 0; j < N; ++j) {
@@ -272,20 +280,11 @@ Matrix& Matrix::operator*= (float s) {
 
 void Matrix::print() const {
 	std::cout << "( m = " << this->m << ", n = " << this->n << " )" << std::endl;
-
-	//if (this->values == nullptr) {
-	//	std::cout << "[null]" << std::endl;
-	//	return;
-	//}
-
 	for (int j = 0; j < this->m; ++j) {
 		std::cout << "[ ";
-		for (int i = 0; i < this->n; ++i) {
-			std::cout << this->values[j][i] << " ";
-		}
+		for (int i = 0; i < this->n; ++i)  std::cout << this->values[j][i] << " ";
 		std::cout << "]" << std::endl;
 	}
-
 }
 
 void Matrix::print(const char* label) const {
@@ -310,24 +309,38 @@ void Matrix::setValues(int m, int n, const std::vector<std::vector<float>>& vals
 
 	for (int j = 0; j < this->m; ++j)
 		for (int i = 0; i < this->n; ++i)
-			this->values[j][i] = vals[j][i];
+			this->set(j, i, vals[j][i]);
 }
 
+float& Matrix::getValueRef(int j, int i) {
+	if (j >= 0 && j < this->M() && i >= 0 && i < this->N()) return this->values[j][i];
+	else throw MatrixIndexOutOfBoundsException();
+}
 
-//====================MATRIX PRESETS========================
+//====================MATRIX PRESET CLASSES========================
 
 Matrix2::Matrix2(bool identity) : Matrix(2, 2, identity) {}
 Matrix2::Matrix2(const std::vector<std::vector<float>>& vals) : Matrix(2, 2, vals) {}
 Matrix2::Matrix2(const Matrix2& mat) : Matrix(mat) {}
 
+Matrix2 Matrix2::Zero() { return Matrix2(false); }
+Matrix2 Matrix2::Identity() { return Matrix2(true); }
+
+
 Matrix3::Matrix3(bool identity) : Matrix(3, 3, identity) {}
 Matrix3::Matrix3(const std::vector<std::vector<float>>& vals) : Matrix(3, 3, vals) {}
 Matrix3::Matrix3(const Matrix3& mat) : Matrix(mat) {}
+
+Matrix3 Matrix3::Zero() { return Matrix3(false); }
+Matrix3 Matrix3::Identity() { return Matrix3(true); }
+
 
 Matrix4::Matrix4(bool identity) : Matrix(4, 4, identity) {}
 Matrix4::Matrix4(const std::vector<std::vector<float>>& vals) : Matrix(4, 4, vals) {}
 Matrix4::Matrix4(const Matrix4& mat) : Matrix(mat) {}
 
+Matrix4 Matrix4::Zero() { return Matrix4(false); }
+Matrix4 Matrix4::Identity() { return Matrix4(true); }
 
 //----------------LU Decomposition---------------------
 	/*Matrix inv(mat.m, mat.n, false);
